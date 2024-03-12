@@ -4,36 +4,52 @@ function getComputerChoice() {
   return optionsArr[randomPosition];
 }
 
+function getPlayerChoice() {
+  const optionsArr = ['Rock', 'Paper', 'Scissors'];
+  let playerChoice;
+  do {
+    playerChoice = capitalizeFirstLetter(prompt("Rock, Paper or Scissors?"));
+    if (!optionsArr.includes(playerChoice)) {
+      console.log('Please make a valid choice.');
+    }
+  }
+  while (!optionsArr.includes(playerChoice));
+  return playerChoice;
+}
+
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 function playRound(playerSelection, computerSelection) {
-  let updatedPlayerSelection = capitalizeFirstLetter(playerSelection);
-  if ((updatedPlayerSelection === 'Rock' && computerSelection === 'Scissors') || (updatedPlayerSelection === 'Scissors' && computerSelection === 'Paper') || (updatedPlayerSelection === 'Paper' && computerSelection === 'Rock')) {
-    return `You Win! ${updatedPlayerSelection} beats ${computerSelection}`;
-  } else if (updatedPlayerSelection === computerSelection) {
-    return `${updatedPlayerSelection} and ${computerSelection} is a Tie`;
+  if ((playerSelection === 'Rock' && computerSelection === 'Scissors') || (playerSelection === 'Scissors' && computerSelection === 'Paper') || (playerSelection === 'Paper' && computerSelection === 'Rock')) {
+    return `You Win! ${playerSelection} beats ${computerSelection}`;
+  } else if (playerSelection === computerSelection) {
+    return `${playerSelection} and ${computerSelection} is a Tie`;
   } else {
-    return `You Lose! ${computerSelection} beats ${updatedPlayerSelection}`;
+    return `You Lose! ${computerSelection} beats ${playerSelection}`;
   }
 }
 
 function playGame(n = 5) {
   let wins = 0;
+  let loses = 0;
+  let ties = 0;
   for (let i = 0; i < n; i++) {
-    let playerSelection = prompt("Rock, Paper or Scissors?: ");
+    let playerSelection = getPlayerChoice();
     let computerSelection = getComputerChoice();
     let game = playRound(playerSelection, computerSelection);
     console.log(game)
-    if (game.split(" ")[1] === "Win!") {
+    let result = game.split(" ");
+    if (result[1] === "Win!") {
       wins++;
+    } else if (result[1] === "Lose!") {
+      loses++;
+    } else {
+      ties++;
     }
   }
-  if (wins > 2) {
-    console.log(`You won ${wins} of ${n} rounds and hence won this game`);
-  } else {
-    console.log(`You won ${wins} of ${n} rounds and hence lost this game`);
-  }
+  console.log(`You won ${wins}, lost ${loses} and tied ${ties} rounds in this game`);
+  return 0;
 }
   
