@@ -30,3 +30,60 @@ function playRound(playerSelection, computerSelection) {
     return `You Lose! ${computerSelection} beats ${playerSelection}`;
   }
 }
+
+const rockButton = document.createElement('button');
+rockButton.id = 'rock';
+rockButton.textContent = 'Rock';
+
+const paperButton = document.createElement('button');
+paperButton.id = 'paper';
+paperButton.textContent = 'Paper';
+
+
+const scissorsButton = document.createElement('button');
+scissorsButton.id = 'scissors';
+scissorsButton.textContent = 'Scissors'
+
+const buttonDiv = document.createElement('div');
+
+buttonDiv.appendChild(rockButton);
+buttonDiv.appendChild(paperButton);
+buttonDiv.appendChild(scissorsButton);
+
+// const resultDiv = document.createElement('div');
+const scoreBoard = document.createElement('div');
+
+document.body.appendChild(buttonDiv);
+document.body.appendChild(resultDiv);
+document.body.appendChild(scoreBoard);
+
+let wins = 0;
+let loses = 0;
+let ties = 0;
+
+buttonDiv.addEventListener('click', (event) => {
+  let target = event.target;
+
+  const gameResult = playRound(target.textContent, getComputerChoice());
+
+  // resultDiv.textContent = gameResult;
+
+  if (gameResult.split(' ')[1] === 'Win!') {
+    wins++;
+  } else if (gameResult.split(' ')[1] === 'Lose!') {
+    loses++;
+  } else {
+    ties++;
+  }
+
+  scoreBoard.textContent = `Wins: ${wins} | Loses: ${loses} | Ties: ${ties}`
+  
+  if (wins + loses + ties === 5) {
+    scoreBoard.textContent = `Wins: ${wins} | Loses: ${loses} | Ties: ${ties}\nWe're done playing!`
+    wins = 0;
+    loses = 0;
+    ties = 0;
+  }
+});
+
+
