@@ -15,7 +15,7 @@ body {
   background-color: rgb(255, 255, 255);
   margin: 20px 0;
   width: 610px;
-  font-size: 28px;
+  /* font-size: 28px; */
   flex-wrap: wrap;
 }
 
