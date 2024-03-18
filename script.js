@@ -31,6 +31,16 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
+const headerDiv = document.createElement('div');
+headerDiv.id = 'headerdiv';
+document.body.appendChild(headerDiv);
+
+const topHeader = document.createElement('h1');
+topHeader.textContent = 'Rock! Paper! Scissors!';
+
+headerDiv.appendChild(topHeader);
+
+
 const rockButton = document.createElement('button');
 rockButton.id = 'rock';
 rockButton.textContent = 'Rock';
@@ -45,13 +55,16 @@ scissorsButton.id = 'scissors';
 scissorsButton.textContent = 'Scissors'
 
 const buttonDiv = document.createElement('div');
+buttonDiv.id = 'buttoncontainer';
 
 buttonDiv.appendChild(rockButton);
 buttonDiv.appendChild(paperButton);
 buttonDiv.appendChild(scissorsButton);
 
-// const resultDiv = document.createElement('div');
+const resultDiv = document.createElement('div');
+
 const scoreBoard = document.createElement('div');
+scoreBoard.id = 'scoreboard';
 
 document.body.appendChild(buttonDiv);
 document.body.appendChild(resultDiv);
@@ -62,28 +75,47 @@ let loses = 0;
 let ties = 0;
 
 buttonDiv.addEventListener('click', (event) => {
+
   let target = event.target;
 
   const gameResult = playRound(target.textContent, getComputerChoice());
 
-  // resultDiv.textContent = gameResult;
+  //resultDiv.textContent = gameResult;
 
-  if (gameResult.split(' ')[1] === 'Win!') {
-    wins++;
-  } else if (gameResult.split(' ')[1] === 'Lose!') {
-    loses++;
-  } else {
-    ties++;
-  }
+  const gameResultSplit = gameResult.split(' ');
 
-  scoreBoard.textContent = `Wins: ${wins} | Loses: ${loses} | Ties: ${ties}`
-  
-  if (wins + loses + ties === 5) {
-    scoreBoard.textContent = `Wins: ${wins} | Loses: ${loses} | Ties: ${ties}\nWe're done playing!`
-    wins = 0;
-    loses = 0;
-    ties = 0;
+  if (gameResultSplit[gameResultSplit.length - 1] !== 'RockPaperScissors') {
+    if (gameResultSplit[1] === 'Win!') {
+      wins++;
+    } else if (gameResultSplit[1] === 'Lose!') {
+      loses++;
+    } else {
+      ties++;
+    }
+
+    scoreBoard.textContent = `Wins: ${wins} | Loses: ${loses} | Ties: ${ties}`;
+    
+    if (wins + loses + ties === 5) {
+      rockButton.disabled = true;
+      paperButton.disabled = true;
+      scissorsButton.disabled = true;
+
+      const resetButton = document.createElement('button');
+      resetButton.id = 'resetbutton'
+      resetButton.textContent = 'Reset';
+      document.body.appendChild(resetButton);
+
+      resetButton.addEventListener('click', (event) => {
+        wins = 0;
+        loses = 0;
+        ties = 0;
+        scoreBoard.textContent = `Wins: ${wins} | Loses: ${loses} | Ties: ${ties}`;
+        document.body.removeChild(resetButton);
+
+        rockButton.disabled = false;
+        paperButton.disabled = false;
+        scissorsButton.disabled = false;
+      })
+    }
   }
 });
-
-
