@@ -54,3 +54,12 @@ button {
   width: 305px;
   background-color: red;
 }
+
+#resultdiv {
+  background-color: palegreen;
+  margin-bottom: 20px;
+  width: 610px;
+  text-align: center;
+  font-size: 25px;
+  border-radius: 10px;
+}
