@@ -71,7 +71,7 @@ document.body.appendChild(resultDiv);
 document.body.appendChild(scoreBoard);
 
 let wins = 0;
-let loses = 0;
+let losses = 0;
 let ties = 0;
 
 buttonDiv.addEventListener('click', (event) => {
@@ -88,14 +88,14 @@ buttonDiv.addEventListener('click', (event) => {
     if (gameResultSplit[1] === 'Win!') {
       wins++;
     } else if (gameResultSplit[1] === 'Lose!') {
-      loses++;
+      losses++;
     } else {
       ties++;
     }
 
-    scoreBoard.textContent = `Wins: ${wins} | Loses: ${loses} | Ties: ${ties}`;
+    scoreBoard.textContent = `Wins: ${wins} | Losses: ${losses} | Ties: ${ties}`;
     
-    if (wins + loses + ties === 5) {
+    if (wins + losses + ties === 5) {
       rockButton.disabled = true;
       paperButton.disabled = true;
       scissorsButton.disabled = true;
@@ -107,9 +107,9 @@ buttonDiv.addEventListener('click', (event) => {
 
       resetButton.addEventListener('click', (event) => {
         wins = 0;
-        loses = 0;
+        losses = 0;
         ties = 0;
-        scoreBoard.textContent = `Wins: ${wins} | Loses: ${loses} | Ties: ${ties}`;
+        scoreBoard.textContent = `Wins: ${wins} | Losses: ${losses} | Ties: ${ties}`;
         document.body.removeChild(resetButton);
 
         rockButton.disabled = false;
