@@ -62,12 +62,15 @@ buttonDiv.appendChild(paperButton);
 buttonDiv.appendChild(scissorsButton);
 
 const resultDiv = document.createElement('div');
+resultDiv.id = 'resultdiv';
 
 const scoreBoard = document.createElement('div');
 scoreBoard.id = 'scoreboard';
 
+const gameResultText = document.createElement('h3');
+
 document.body.appendChild(buttonDiv);
-document.body.appendChild(resultDiv);
+// document.body.appendChild(resultDiv);
 document.body.appendChild(scoreBoard);
 
 let wins = 0;
@@ -78,13 +81,16 @@ buttonDiv.addEventListener('click', (event) => {
 
   let target = event.target;
 
-  const gameResult = playRound(target.textContent, getComputerChoice());
+  const computerChoice = getComputerChoice()
 
-  //resultDiv.textContent = gameResult;
+  const gameResult = playRound(target.textContent, computerChoice);
 
   const gameResultSplit = gameResult.split(' ');
 
   if (gameResultSplit[gameResultSplit.length - 1] !== 'RockPaperScissors') {
+    document.body.appendChild(resultDiv);
+    resultDiv.textContent = `You: ${target.textContent} ------------- Computer: ${computerChoice}`;
+    
     if (gameResultSplit[1] === 'Win!') {
       wins++;
     } else if (gameResultSplit[1] === 'Lose!') {
@@ -111,6 +117,7 @@ buttonDiv.addEventListener('click', (event) => {
         ties = 0;
         scoreBoard.textContent = `Wins: ${wins} | Losses: ${losses} | Ties: ${ties}`;
         document.body.removeChild(resetButton);
+        document.body.removeChild(resultDiv);
 
         rockButton.disabled = false;
         paperButton.disabled = false;
